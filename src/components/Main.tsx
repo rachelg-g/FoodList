@@ -1,20 +1,17 @@
-import React from "react";
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  createMuiTheme
-} from "@material-ui/core/styles";
+import React, { FC, useState, createContext, useContext } from "react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import { FoodContext } from "../context";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,9 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       display: "none"
     },
+    root: {
+      flexGrow: 1
+    },
     card: {
-      maxWidth: 345,
-      margin: 8
+      margin: 0
     },
     media: {
       height: 140
@@ -51,23 +50,44 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Main = () => {
+interface CardProps {
+  title?: string;
+  category?: string;
+}
+
+const Main: FC<CardProps> = () => {
   const classes = useStyles();
-  const [category, setCategory] = React.useState("");
 
-  const inputLabel = React.useRef<HTMLLabelElement>(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
-    setLabelWidth(inputLabel.current!.offsetWidth);
-  }, []);
+  const context = useContext(FoodContext);
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setCategory(event.target.value as string);
+  console.log(context);
+
+  const [foodName, setFoodName] = useState("");
+
+  const onChangeInput = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setFoodName(event.target.value as string);
   };
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    console.log("전송?");
+  };
+
+  // const [category, setCategory] = useState("");
+
+  // const inputLabel = React.useRef<HTMLLabelElement>(null);
+  // const [labelWidth, setLabelWidth] = useState(0);
+  // React.useEffect(() => {
+  //   setLabelWidth(inputLabel.current!.offsetWidth);
+  // }, []);
+
+  // const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  //   setCategory(event.target.value as string);
+  // };
 
   return (
     <div className={classes.container}>
-      <form noValidate autoComplete="off">
+      {/* <form noValidate autoComplete="off" onSubmit={onSubmit}>
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
             카테고리
@@ -76,7 +96,7 @@ const Main = () => {
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
             value={category}
-            onChange={handleChange}
+            onChange={handleSelectChange}
             labelWidth={labelWidth}
           >
             <MenuItem value="">
@@ -94,24 +114,38 @@ const Main = () => {
           label="음식 이름"
           variant="outlined"
           fullWidth
+          value={foodName}
+          onChange={onChangeInput}
         />
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} type="submit">
           입력
         </Button>
-      </form>
+      </form> */}
 
-      <Card className={classes.card}>
-        <CardActionArea>
-          <CardContent>
-            <Typography gutterBottom variant="subtitle2" component="p">
-              음식 카테고리
-            </Typography>
-            <Typography variant="h4" color="textSecondary" component="h2">
-              음식 이름
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          {context.food.map(item => (
+            <Grid item xs={4}>
+              <Card className={classes.card}>
+                <CardActionArea>
+                  <CardContent>
+                    <Typography gutterBottom variant="subtitle2" component="p">
+                      {item.category}
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      color="textSecondary"
+                      component="h2"
+                    >
+                      {item.title}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </div>
     </div>
   );
 };

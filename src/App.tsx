@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import "./App.css";
 import Main from "./components/Main";
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
     <div className="App">
       <Main />

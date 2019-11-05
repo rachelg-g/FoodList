@@ -1,4 +1,4 @@
-import React, { FC, useState, createContext, useContext } from "react";
+import React, { FC, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -6,12 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import { FoodContext } from "../context";
+import SimpleTabs from "./SimpleTabs";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,31 +32,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       display: "none"
-    },
-    root: {
-      flexGrow: 1
-    },
-    card: {
-      margin: 0
-    },
-    media: {
-      height: 140
     }
   })
 );
 
-interface CardProps {
-  title?: string;
-  category?: string;
-}
-
-const Main: FC<CardProps> = () => {
+const Main: FC = () => {
   const classes = useStyles();
-
-  const context = useContext(FoodContext);
-
-  console.log(context);
-
   const [foodName, setFoodName] = useState("");
 
   const onChangeInput = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -121,31 +97,8 @@ const Main: FC<CardProps> = () => {
           입력
         </Button>
       </form> */}
-
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          {context.food.map(item => (
-            <Grid item xs={4}>
-              <Card className={classes.card}>
-                <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="subtitle2" component="p">
-                      {item.category}
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      color="textSecondary"
-                      component="h2"
-                    >
-                      {item.title}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </div>
+      {/* <SimpleTabs /> */}
+      <SimpleTabs />
     </div>
   );
 };

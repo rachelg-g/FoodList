@@ -70,10 +70,19 @@ const Main: FC = porps => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+
+    if (!foodCategory || !foodName) {
+      alert("카테고리 및 음식 이름을 채워주세요");
+    } else {
+      setFoodCategory("");
+      setFoodName("");
+    }
+
     dispatch({
       type: ADD,
       payload: { title: foodName, category: foodCategory }
     });
+
     console.log(foodCategory, foodName);
   };
 

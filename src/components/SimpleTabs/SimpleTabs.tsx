@@ -1,14 +1,19 @@
 import React, { FC } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Box,
+  Grid,
+  Card,
+  CardActionArea,
+  CardHeader,
+  IconButton,
+  CardContent
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import { Food } from "../../context";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -89,6 +94,13 @@ const SimpleTabs: FC<CardProps> = ({ foods }) => {
                 <Grid item xs={4} key={i}>
                   <Card className={classes.card}>
                     <CardActionArea>
+                      <CardHeader
+                        action={
+                          <IconButton aria-label="close">
+                            <CloseIcon />
+                          </IconButton>
+                        }
+                      />
                       <CardContent>
                         <Typography
                           gutterBottom
@@ -120,6 +132,13 @@ const SimpleTabs: FC<CardProps> = ({ foods }) => {
                 <Grid item xs={4} key={i}>
                   <Card className={classes.card}>
                     <CardActionArea>
+                      <CardHeader
+                        action={
+                          <IconButton aria-label="close">
+                            <CloseIcon />
+                          </IconButton>
+                        }
+                      />
                       <CardContent>
                         <Typography
                           gutterBottom
@@ -151,6 +170,13 @@ const SimpleTabs: FC<CardProps> = ({ foods }) => {
                 <Grid item xs={4} key={i}>
                   <Card className={classes.card}>
                     <CardActionArea>
+                      <CardHeader
+                        action={
+                          <IconButton aria-label="close">
+                            <CloseIcon />
+                          </IconButton>
+                        }
+                      />
                       <CardContent>
                         <Typography
                           gutterBottom
@@ -182,6 +208,13 @@ const SimpleTabs: FC<CardProps> = ({ foods }) => {
                 <Grid item xs={4} key={i}>
                   <Card className={classes.card}>
                     <CardActionArea>
+                      <CardHeader
+                        action={
+                          <IconButton aria-label="close">
+                            <CloseIcon />
+                          </IconButton>
+                        }
+                      />
                       <CardContent>
                         <Typography
                           gutterBottom

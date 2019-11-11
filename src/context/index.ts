@@ -1,5 +1,14 @@
 import { createContext } from "react";
 
+export interface Food {
+  title: String;
+  category: String;
+}
+
+export interface FoodList {
+  food: Food[];
+}
+
 export const foodData = {
   food: [
     {
@@ -37,4 +46,4 @@ export const foodData = {
   ]
 };
 
-export const FoodContext = createContext(foodData);
+export const FoodContext = createContext<FoodList>(foodData);

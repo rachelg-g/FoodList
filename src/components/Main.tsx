@@ -82,8 +82,6 @@ const Main: FC = porps => {
       type: ADD,
       payload: { title: foodName, category: foodCategory }
     });
-
-    console.log(foodCategory, foodName);
   };
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);

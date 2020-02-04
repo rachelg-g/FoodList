@@ -6,11 +6,11 @@ export interface Food {
 }
 
 export interface FoodList {
-  food: Food[];
+  foods: Food[];
 }
 
 export const foodData = {
-  food: [
+  foods: [
     {
       title: "피자",
       category: "양식"
@@ -45,5 +45,12 @@ export const foodData = {
     }
   ]
 };
+
+export enum FoodType {
+  KOREAN = '한식',
+  CHINESE = '중식',
+  JAPANESE = '일식',
+  WESTERN = '양식'
+}
 
 export const FoodContext = createContext<FoodList>(foodData);

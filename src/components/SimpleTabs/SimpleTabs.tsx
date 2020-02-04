@@ -1,20 +1,8 @@
 import React, { FC } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-  Grid,
-  Card,
-  CardActionArea,
-  CardHeader,
-  IconButton,
-  CardContent
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { Food } from "../../context";
+import { AppBar, Tabs, Tab, Typography, Box, Grid } from "@material-ui/core";
+import { Food, FoodType } from "../../context";
+import FoodCard from "./FoodCard";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -44,23 +32,24 @@ const TabPanel = (props: TabPanelProps) => {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      <Box p={3}>{children}</Box>
+      {value === index && <Box p={4}>{children}</Box>}
     </Typography>
   );
 };
 
-const a11yProps = (index: any) => {
+const a11yProps = (index: number) => {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`
   };
 };
 
-interface CardProps {
-  foods?: Food[];
+interface SimpleTabsProps {
+  foods: Food[]
+  foodtype?: FoodType
 }
 
-const SimpleTabs: FC<CardProps> = ({ foods }) => {
+const SimpleTabs: FC<SimpleTabsProps> = ({ foods}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -71,7 +60,7 @@ const SimpleTabs: FC<CardProps> = ({ foods }) => {
   const chineseFood = foods && foods.filter(item => item.category === "중식");
   const japaneseFood = foods && foods.filter(item => item.category === "일식");
   const westernFood = foods && foods.filter(item => item.category === "양식");
-
+  
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -87,154 +76,38 @@ const SimpleTabs: FC<CardProps> = ({ foods }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <div className={classes.root}>
+        <div>
           <Grid container spacing={2}>
-            {koreanFood &&
-              koreanFood.map((item, i) => (
-                <Grid item xs={4} key={i}>
-                  <Card className={classes.card}>
-                    <CardActionArea>
-                      <CardHeader
-                        action={
-                          <IconButton aria-label="close">
-                            <CloseIcon />
-                          </IconButton>
-                        }
-                      />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle2"
-                          component="p"
-                        >
-                          {item.category}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          component="h2"
-                        >
-                          {item.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
+          {koreanFood && koreanFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
           </Grid>
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div className={classes.root}>
+        <div>
           <Grid container spacing={2}>
-            {chineseFood &&
-              chineseFood.map((item, i) => (
-                <Grid item xs={4} key={i}>
-                  <Card className={classes.card}>
-                    <CardActionArea>
-                      <CardHeader
-                        action={
-                          <IconButton aria-label="close">
-                            <CloseIcon />
-                          </IconButton>
-                        }
-                      />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle2"
-                          component="p"
-                        >
-                          {item.category}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          component="h2"
-                        >
-                          {item.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
+          {chineseFood && chineseFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
           </Grid>
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <div className={classes.root}>
+        <div>
           <Grid container spacing={2}>
-            {japaneseFood &&
-              japaneseFood.map((item, i) => (
-                <Grid item xs={4} key={i}>
-                  <Card className={classes.card}>
-                    <CardActionArea>
-                      <CardHeader
-                        action={
-                          <IconButton aria-label="close">
-                            <CloseIcon />
-                          </IconButton>
-                        }
-                      />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle2"
-                          component="p"
-                        >
-                          {item.category}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          component="h2"
-                        >
-                          {item.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
+          {japaneseFood && japaneseFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
           </Grid>
         </div>
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        <div className={classes.root}>
+      <TabPanel value={value}  index={3}>
+        <div>
           <Grid container spacing={2}>
-            {westernFood &&
-              westernFood.map((item, i) => (
-                <Grid item xs={4} key={i}>
-                  <Card className={classes.card}>
-                    <CardActionArea>
-                      <CardHeader
-                        action={
-                          <IconButton aria-label="close">
-                            <CloseIcon />
-                          </IconButton>
-                        }
-                      />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle2"
-                          component="p"
-                        >
-                          {item.category}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          component="h2"
-                        >
-                          {item.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
+          {westernFood && westernFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
           </Grid>
         </div>
       </TabPanel>

@@ -14,6 +14,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+const Menu = [
+  {label: '한식'},
+  {label: '중식'},
+  {label: '일식'},
+  {label: '양식'},
+]
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -35,13 +42,6 @@ const TabPanel = (props: TabPanelProps) => {
       {value === index && <Box p={4}>{children}</Box>}
     </Typography>
   );
-};
-
-const a11yProps = (index: number) => {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
-  };
 };
 
 interface SimpleTabsProps {
@@ -69,10 +69,9 @@ const SimpleTabs: FC<SimpleTabsProps> = ({ foods}) => {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="한식" {...a11yProps(0)} />
-          <Tab label="중식" {...a11yProps(1)} />
-          <Tab label="일식" {...a11yProps(2)} />
-          <Tab label="양식" {...a11yProps(3)} />
+          {Menu.map((item, index) => (
+            <Tab label={item.label} key={index} />
+          ))}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

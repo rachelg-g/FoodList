@@ -47,8 +47,6 @@ const FoodCard: FC<FoodCardProps> = ({ index, item }) => {
             >
               {item.title}
             </Typography>
-            {/* <div>{item.title}</div>
-            <div>{item.category}</div> */}
           </CardContent>
         </CardActionArea>
       </Card>

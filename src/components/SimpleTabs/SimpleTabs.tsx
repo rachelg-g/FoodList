@@ -1,12 +1,25 @@
-import React from "react";
+import React, { FC } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Cards from "../Cards";
-import { Card } from "@material-ui/core";
+import { AppBar, Tabs, Tab, Typography, Box, Grid } from "@material-ui/core";
+import { Food, FoodType } from "../../context";
+import FoodCard from "./FoodCard";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper
+  },
+  card: {
+    margin: 0
+  }
+}));
+
+const Menu = [
+  {label: '한식'},
+  {label: '중식'},
+  {label: '일식'},
+  {label: '양식'},
+]
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -26,33 +39,28 @@ const TabPanel = (props: TabPanelProps) => {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      <Box p={3}>{children}</Box>
+      {value === index && <Box p={4}>{children}</Box>}
     </Typography>
   );
 };
 
-const a11yProps = (index: any) => {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
-  };
-};
+interface SimpleTabsProps {
+  foods: Food[]
+  foodtype?: FoodType
+}
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
-  }
-}));
-
-const SimpleTabs = () => {
+const SimpleTabs: FC<SimpleTabsProps> = ({ foods}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
+  const koreanFood = foods && foods.filter(item => item.category === "한식");
+  const chineseFood = foods && foods.filter(item => item.category === "중식");
+  const japaneseFood = foods && foods.filter(item => item.category === "일식");
+  const westernFood = foods && foods.filter(item => item.category === "양식");
+  
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -61,23 +69,46 @@ const SimpleTabs = () => {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="한식" {...a11yProps(0)} />
-          <Tab label="중식" {...a11yProps(1)} />
-          <Tab label="일식" {...a11yProps(2)} />
-          <Tab label="양식" {...a11yProps(3)} />
+          {Menu.map((item, index) => (
+            <Tab label={item.label} key={index} />
+          ))}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Cards title="title" category="한식"/>
+        <div>
+          <Grid container spacing={2}>
+          {koreanFood && koreanFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
+          </Grid>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Cards title="title" category="중식"/>
+        <div>
+          <Grid container spacing={2}>
+          {chineseFood && chineseFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
+          </Grid>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Cards title="title" category="일식"/>
+        <div>
+          <Grid container spacing={2}>
+          {japaneseFood && japaneseFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
+          </Grid>
+        </div>
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Cards title="title" category="양식"/>
+      <TabPanel value={value}  index={3}>
+        <div>
+          <Grid container spacing={2}>
+          {westernFood && westernFood.map((item, index) => (
+            <FoodCard item={item} index={index} />
+          ))}
+          </Grid>
+        </div>
       </TabPanel>
     </div>
   );

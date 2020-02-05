@@ -1,7 +1,16 @@
 import { createContext } from "react";
 
+export interface Food {
+  title: String;
+  category: String;
+}
+
+export interface FoodList {
+  foods: Food[];
+}
+
 export const foodData = {
-  food: [
+  foods: [
     {
       title: "피자",
       category: "양식"
@@ -37,4 +46,11 @@ export const foodData = {
   ]
 };
 
-export const FoodContext = createContext(foodData);
+export enum FoodType {
+  KOREAN = '한식',
+  CHINESE = '중식',
+  JAPANESE = '일식',
+  WESTERN = '양식'
+}
+
+export const FoodContext = createContext<FoodList>(foodData);
